@@ -3,23 +3,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Dashboard extends CI_Controller {
 
-	public function index()
-	{
-        $this->header();
-        $this->load->view('v_dashboard');
-        $this->footer();
+
+	function __construct()
+    {
+        parent::__construct();
     }
-    public function header()
-	{
+
+    public function index()
+    {
         
-        $this->load->view('v_header');
-       
-    }
-    public function footer()
-	{
-        
-        $this->load->view('v_footer');
-       
+        $data = [
+            'isi' => 'Dashboard/opening'
+        ];
+        $this->load->view('Templates/master_dashboard', $data);
     }
 }
-

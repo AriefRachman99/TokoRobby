@@ -1,48 +1,50 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Kategori extends CI_Controller {
+class Unit extends CI_Controller{
 
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('kategori_m');
+		$this->load->model('unit_m');
 	}
+
 	public function index()
 	{
 		$data = [
-			'isi' => 'produk/kategori/kategori_data',
-			'data_category' => $this->kategori_m->get()
+			'isi' => 'produk/unit/unit_data',
+			'data_unit' => $this->unit_m->get()
 		];
 		$this->load->view('Templates/master_dashboard', $data);
 	}
 
 	public function add()
 	{
-		$category = new stdClass();
-		$category->category_id = null;
-		$category->name = null; 	
+		$unit = new stdClass();
+		$unit->unit_id = null;
+		$unit->name = null; 	
 		$data = array (
-			'isi' => 'produk/kategori/kategori_form',
+			'isi' => 'produk/unit/unit_form',
 			'page' => 'tambah',
-			'row' => $category
+			'row' => $unit
 		);
 		$this->load->view('Templates/master_dashboard', $data);
 	}
 
 	public function edit($id)
 	{
-		$data_category = $this->kategori_m->get($id);
-		if($data_category->num_rows()>0){
-			$category = $data_category->row();
+		$data_unit = $this->unit_m->get($id);
+		if($data_unit->num_rows()>0){
+			$unit = $data_unit->row();
 			$data=[
-				'isi' => 'produk/kategori/kategori_form',
+				'isi' => 'produk/unit/unit_form',
 				'page' => 'edit',
-				'row' => $category
+				'row' => $unit
 			];
 			$this->load->view('Templates/master_dashboard', $data);
 		}else{
 			echo "<script>alert('Data tidak ditemukan');";
-			echo "window.location='".site_url('kategori')."';</script>";
+			echo "window.location='".site_url('unit')."';</script>";
 		}
 	}
 
@@ -50,24 +52,24 @@ class Kategori extends CI_Controller {
 	{
 		$post =  $this->input->post(null, TRUE);
 		if(isset($_POST['tambah'])){
-			$this->kategori_m->add($post);
+			$this->unit_m->add($post);
 		}else if(isset($_POST['edit'])){
-			$this->kategori_m->edit($post);
+			$this->unit_m->edit($post);
 		}
 		if($this->db->affected_rows() > 0){
 			$this->session->set_flashdata('success', 'Data berhasil disimpan');
 			} 
 			echo "<script>
-				window.location='".site_url('kategori')."';</script>";
+				window.location='".site_url('unit')."';</script>";
 	}
 
 	public function del($id)
 	{
-		$this->kategori_m->del($id);
+		$this->unit_m->del($id);
 		if($this->db->affected_rows() > 0){
 			$this->session->set_flashdata('success', 'Data berhasil dihapus');
 			} 
 			echo "<script>
-				window.location='".site_url('kategori')."';</script>";
+				window.location='".site_url('unit')."';</script>";
 	}
 }
